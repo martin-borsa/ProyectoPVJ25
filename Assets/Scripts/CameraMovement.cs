@@ -4,49 +4,66 @@ using UnityEngine;
 
 public class CameraMovement : MonoBehaviour
 {
-    public Transform target;               // Transform arriba del personaje
-    public float baseDistance = 5f;        // Distancia base en Z
-    public float maxDistance = 8f;         // Distancia al correr (shift)
+    [Header("Orbit Settings")]
+    public Transform target;
+    public float baseDistance = 5f;
+    public float maxDistance = 8f;
     public float mouseSensitivity = 3f;
-
     public float pitchMin = -40f;
     public float pitchMax = 60f;
 
+    [Header("Run Offset Settings")]
+    public float distanceLerpSpeed = 2f;
+    public float distanceLerpSpeedStop = 1f;
+    public float shiftReleaseDelay = 1f;
+
+    [Header("Pitch Influence Settings")]
+    public float yOffsetMin = -1f;
+    public float yOffsetMax = 1f;
+    public float zOffsetMin = -1f;
+    public float zOffsetMax = 1f;
+
+    [Header("Aiming Settings")]
+    public float aimXOffset = 1.5f;
+    public float aimYOffset = 0.5f;
+    public float aimZOffset = 1f;
+    public float offsetLerpSpeed = 5f;
+    public float aimFOV = 40f;
+    public float normalFOV = 60f;
+    public float fovLerpSpeed = 5f;
+
     private float yaw = 0f;
     private float pitch = 20f;
-
-    private float currentDistance; // Distancia actual Z
+    private float currentDistance;
     private bool isShiftReleased = false;
     private float releaseTime = 0f;
 
-    [Header("Lerp Settings")]
-    public float lerpSpeed = 2f;       // Velocidad al alejar (Shift presionado)
-    public float lerpSpeedStop = 1f;   // Velocidad al dejar de moverse
-    public float shiftReleaseDelay = 1f;       // Delay antes de acercar al soltar Shift
-
-    [Header("Pitch Influence Settings")]
-    public float yOffsetMin = -1f;     // Cuánto baja la cámara al mirar abajo
-    public float yOffsetMax = 1f;      // Cuánto sube al mirar arriba
-    public float zOffsetMin = -1f;     // Se aleja (Z negativo) al mirar abajo
-    public float zOffsetMax = 1f;      // Se acerca (Z positivo) al mirar arriba
+    private float currentXVisualOffset = 0f;
+    private float currentXCamOffset = 0f;
+    private float currentYCamOffset = 0f;
+    private float currentZCamOffset = 0f;
+    private Camera cam;
 
     void Start()
     {
         currentDistance = baseDistance;
+        cam = GetComponent<Camera>();
+        if (cam == null) cam = Camera.main;
+        cam.fieldOfView = normalFOV;
     }
 
     void LateUpdate()
     {
+        // Rotación con mouse
         float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity;
         float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity;
-
         yaw += mouseX;
         pitch -= mouseY;
         pitch = Mathf.Clamp(pitch, pitchMin, pitchMax);
 
+        // Movimiento y correr
         bool isMoving = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")).sqrMagnitude > 0.1f;
         bool isRunning = Input.GetKey(KeyCode.LeftShift) && isMoving;
-
         if (!isRunning && Input.GetKeyUp(KeyCode.LeftShift))
         {
             isShiftReleased = true;
@@ -55,28 +72,45 @@ public class CameraMovement : MonoBehaviour
 
         if (isRunning)
         {
-            currentDistance = Mathf.Lerp(currentDistance, maxDistance, Time.deltaTime * lerpSpeed);
+            currentDistance = Mathf.Lerp(currentDistance, maxDistance, Time.deltaTime * distanceLerpSpeed);
             isShiftReleased = false;
         }
-        else if (!isRunning && isShiftReleased && Time.time > releaseTime + shiftReleaseDelay)
+        else if (isShiftReleased && Time.time > releaseTime + shiftReleaseDelay)
         {
-            currentDistance = Mathf.Lerp(currentDistance, baseDistance, Time.deltaTime * lerpSpeedStop);
+            currentDistance = Mathf.Lerp(currentDistance, baseDistance, Time.deltaTime * distanceLerpSpeedStop);
         }
 
-        // Factor de inclinación (0 = mirando abajo, 1 = mirando arriba)
+        // Pitch offsets
         float verticalFactor = Mathf.InverseLerp(pitchMin, pitchMax, pitch);
-
-        // Offset vertical en Y (más alto al mirar arriba, más bajo al mirar abajo)
         float yOffset = Mathf.Lerp(yOffsetMin, yOffsetMax, verticalFactor);
-        // Offset en Z (más cerca al mirar arriba, más lejos al mirar abajo)
         float zOffset = Mathf.Lerp(zOffsetMin, zOffsetMax, verticalFactor);
 
-        Quaternion rotation = Quaternion.Euler(pitch, yaw, 0f);
+        // Aiming (click derecho)
+        bool isAiming = Input.GetMouseButton(1);
 
-        // Posición final teniendo en cuenta rotación y offset
-        Vector3 cameraOffset = rotation * new Vector3(0f, yOffset, -(currentDistance + zOffset));
+        float targetXVisualOffset = isAiming ? aimXOffset : 0f;
+        float targetXCamOffset = isAiming ? aimXOffset : 0f;
+        float targetYCamOffset = isAiming ? aimYOffset : 0f;
+        float targetZCamOffset = isAiming ? aimZOffset : 0f;
+
+        // Lerp para desplazamientos de cámara
+        currentXVisualOffset = Mathf.Lerp(currentXVisualOffset, targetXVisualOffset, Time.deltaTime * offsetLerpSpeed);
+        currentXCamOffset = Mathf.Lerp(currentXCamOffset, targetXCamOffset, Time.deltaTime * offsetLerpSpeed);
+        currentYCamOffset = Mathf.Lerp(currentYCamOffset, targetYCamOffset, Time.deltaTime * offsetLerpSpeed);
+        currentZCamOffset = Mathf.Lerp(currentZCamOffset, targetZCamOffset, Time.deltaTime * offsetLerpSpeed);
+
+        // FOV
+        float targetFOV = isAiming ? aimFOV : normalFOV;
+        cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, targetFOV, Time.deltaTime * fovLerpSpeed);
+
+        // Calcular la posición de la cámara
+        Quaternion rotation = Quaternion.Euler(pitch, yaw, 0f);
+        Vector3 offset = new Vector3(currentXCamOffset, yOffset + currentYCamOffset, -(currentDistance + zOffset - currentZCamOffset));
+        Vector3 cameraOffset = rotation * offset;
         transform.position = target.position + cameraOffset;
 
-        transform.LookAt(target.position);
+        // Punto de enfoque desplazado en X
+        Vector3 visualTargetPos = target.position + target.right * currentXVisualOffset;
+        transform.LookAt(visualTargetPos);
     }
 }

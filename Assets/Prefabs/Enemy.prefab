@@ -13,8 +13,9 @@ GameObject:
   - component: {fileID: 7136202124203347045}
   - component: {fileID: 1629917733008098670}
   - component: {fileID: 4418863967068799833}
-  - component: {fileID: 3598468812466022899}
   - component: {fileID: 5964062129836070886}
+  - component: {fileID: 5258513783410876474}
+  - component: {fileID: 5677839120250257510}
   m_Layer: 6
   m_Name: Enemy
   m_TagString: Enemy
@@ -135,23 +136,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &3598468812466022899
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8291816520822503230}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b4f413d2b326b5449382b08cfad1cc0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 4
-  isPlayer: 0
-  deathPrefab: {fileID: 642225012482916531, guid: 5be689d2c8de3fe4591c7af459e8a5bc, type: 3}
-  damageAmount: 1
-  targetTag: Player
 --- !u!114 &5964062129836070886
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -174,3 +158,31 @@ MonoBehaviour:
   wallLayer:
     serializedVersion: 2
     m_Bits: 0
+--- !u!114 &5258513783410876474
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8291816520822503230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fbf6873472427746b9bdeb086edbef1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  deathPrefab: {fileID: 642225012482916531, guid: 5be689d2c8de3fe4591c7af459e8a5bc, type: 3}
+--- !u!114 &5677839120250257510
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8291816520822503230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3efbc69ffd7e9042b80bee301ec4379, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageAmount: 10
+  targetTag: Player
