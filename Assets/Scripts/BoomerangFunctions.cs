@@ -28,14 +28,16 @@ public class BoomerangFunctions : MonoBehaviour
     public Vector3 launchOffset = new Vector3(0, 0, 1);
 
     [Header("Melee Settings")]
-    [Tooltip("Cooldown (seconds) después de un ataque melee")]
+    [Tooltip("Cooldown (seconds) después de un ataque melee/cargado")]
     public float meleeCooldown = 2f;
     private float meleeCooldownTimer = 0f;
+    private bool isCharging = false;
 
     private bool rightClicked = false;
     private Vector3 launchDirection;
     private Vector3 launchStartPosition;
     private Camera mainCamera;
+    private Animator meleeAnimator;
 
     void Start()
     {
@@ -49,10 +51,12 @@ public class BoomerangFunctions : MonoBehaviour
             catchZoneCollider.enabled = true;
 
         mainCamera = Camera.main;
+        meleeAnimator = meleeBoomerang.GetComponent<Animator>();
     }
 
     void Update()
     {
+        // Cooldown
         if (meleeCooldownTimer > 0f)
             meleeCooldownTimer -= Time.deltaTime;
 
@@ -62,17 +66,35 @@ public class BoomerangFunctions : MonoBehaviour
                 restBoomerang.transform.localPosition = restOffset;
                 restBoomerang.transform.localRotation = Quaternion.identity;
 
+                // Right click to aim
                 if (Input.GetMouseButtonDown(1)) rightClicked = true;
                 if (Input.GetMouseButtonUp(1)) rightClicked = false;
 
+                // Launch
                 if (rightClicked && Input.GetMouseButtonDown(0))
+                {
                     Launch();
-                else if (Input.GetMouseButtonDown(0) && meleeCooldownTimer <= 0f && !rightClicked)
-                    MeleeAttack();
+                }
+                // Start charging melee
+                else if (Input.GetMouseButtonDown(0) && !rightClicked && meleeCooldownTimer <= 0f)
+                {
+                    StartMeleeCharge();
+                }
                 break;
 
             case BoomerangState.Melee:
+                // While holding, charging animation plays
+                if (isCharging && Input.GetMouseButtonUp(0))
+                {
+                    // Release charge: play hit animation
+                    isCharging = false;
+                    if (meleeAnimator != null)
+                        meleeAnimator.SetTrigger("Hit");
+                    // After hit animation, end melee
+                    StartCoroutine(EndMeleeAttackAfterAnimation());
+                }
                 break;
+
             case BoomerangState.Launched:
             case BoomerangState.Returning:
                 MoveLaunchBoomerang();
@@ -88,48 +110,44 @@ public class BoomerangFunctions : MonoBehaviour
         launchBoomerang.SetActive(true);
         launchBoomerang.transform.SetParent(null);
         launchBoomerang.transform.rotation = Quaternion.identity;
-
-        // Posicionar boomerang en el offset
         Vector3 startPos = transform.position + transform.TransformVector(launchOffset);
         launchBoomerang.transform.position = startPos;
         launchStartPosition = startPos;
-
-        // Calcular punto objetivo en el centro de la pantalla
+        // Aim via center ray
         Vector3 targetPoint;
         Ray ray = mainCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
-        if (Physics.Raycast(ray, out RaycastHit hit, 100f, collisionLayers))
-        {
+        if (Physics.Raycast(ray, out RaycastHit hit, maxDistance, collisionLayers))
             targetPoint = hit.point;
-        }
         else
-        {
             targetPoint = ray.origin + ray.direction * maxDistance;
-        }
         launchDirection = (targetPoint - startPos).normalized;
-
         if (catchZoneCollider != null)
             catchZoneCollider.enabled = false;
     }
 
-    private void MeleeAttack()
+    private void StartMeleeCharge()
     {
         state = BoomerangState.Melee;
+        isCharging = true;
         meleeBoomerang.SetActive(true);
-        meleeCooldownTimer = meleeCooldown;
-        StartCoroutine(EndMeleeAttackAfterAnimation());
+        if (meleeAnimator != null)
+            meleeAnimator.SetTrigger("Charge");
     }
 
     private IEnumerator EndMeleeAttackAfterAnimation()
     {
+        // Wait duration of hit animation (assumed 0.5s)
         yield return new WaitForSeconds(0.5f);
+        // End melee
         meleeBoomerang.SetActive(false);
         state = BoomerangState.Rest;
+        // Start cooldown
+        meleeCooldownTimer = meleeCooldown;
     }
 
     private void MoveLaunchBoomerang()
     {
         Vector3 currentPos = launchBoomerang.transform.position;
-
         if (state == BoomerangState.Launched)
         {
             launchBoomerang.transform.position = currentPos + launchDirection * launchSpeed * Time.deltaTime;
