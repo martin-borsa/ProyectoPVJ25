@@ -956,8 +956,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dfbcebc6bc2a4c4192bc3adffe25038, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  melee: 0
   damageAmount: 25
   targetTag: Enemy
+  player: {fileID: 0}
 --- !u!1 &212572703
 GameObject:
   m_ObjectHideFlags: 0
@@ -3183,6 +3185,8 @@ GameObject:
   - component: {fileID: 723270810}
   - component: {fileID: 723270812}
   - component: {fileID: 723270811}
+  - component: {fileID: 723270814}
+  - component: {fileID: 723270813}
   m_Layer: 8
   m_Name: ModeloMelee
   m_TagString: Untagged
@@ -3198,13 +3202,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 723270809}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0.5, z: 0}
+  m_LocalRotation: {x: 0.04752368, y: 0.7055081, z: 0.0475236, w: 0.7055081}
+  m_LocalPosition: {x: 0.01, y: 0.79, z: 0.2}
   m_LocalScale: {x: 0.20000002, y: 1.25, z: 0.050000004}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1241803673}
-  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 7.707}
 --- !u!23 &723270811
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -3255,6 +3259,43 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 723270809}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &723270813
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 723270809}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dfbcebc6bc2a4c4192bc3adffe25038, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  melee: 1
+  damageAmount: 25
+  targetTag: Enemy
+  player: {fileID: 1333329847}
+--- !u!65 &723270814
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 723270809}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 1600
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.0972966, y: 1.0327816, z: 1.6477239}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &736168733
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5766,6 +5807,7 @@ MonoBehaviour:
   launchBoomerang: {fileID: 194657920}
   meleeBoomerang: {fileID: 1241803672}
   catchZoneCollider: {fileID: 984707761}
+  hud: {fileID: 2022888608}
   launchSpeed: 60
   returnSpeed: 60
   maxDistance: 20
@@ -5777,6 +5819,8 @@ MonoBehaviour:
   restOffset: {x: 0, y: 0.25, z: -0.7}
   launchOffset: {x: 0, y: 0.25, z: 1.5}
   meleeCooldown: 1
+  chargeThreshold: 2
+  multi: 0
 --- !u!114 &1333329857
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7637,7 +7681,7 @@ MonoBehaviour:
   m_MinValue: 1
   m_MaxValue: 2
   m_WholeNumbers: 0
-  m_Value: 1.25
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []

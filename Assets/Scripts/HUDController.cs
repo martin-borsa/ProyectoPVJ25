@@ -20,7 +20,11 @@ public class HUDController : MonoBehaviour
     void Start()
     {
         barraVida.maxValue = 100;
-        barraCarga.maxValue = 100;
+        barraCarga.minValue = 1f;
+        barraCarga.maxValue = 2f;
+        barraCarga.value = 0f;
+        barraCarga.gameObject.SetActive(false);
+        crosshair.gameObject.SetActive(false);
         ActualizarHUD();
     }
 
@@ -30,17 +34,6 @@ public class HUDController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.H)) vida -= 10;
         if (Input.GetKeyDown(KeyCode.M)) monedas += 1;
 
-        // Simulación de carga
-        if (Input.GetKey(KeyCode.C))
-        {
-            carga += Time.deltaTime * 20f; // cargar con el tiempo
-            if (carga > 100f) carga = 100f;
-        }
-        else
-        {
-            carga -= Time.deltaTime * 10f; // descarga lenta
-            if (carga < 0f) carga = 0f;
-        }
         if (Input.GetMouseButtonDown(1)) // clic derecho presionado
             crosshair.SetActive(true);
 
@@ -55,6 +48,26 @@ public class HUDController : MonoBehaviour
     {
         monedas++;
         textoMonedas.text = "Monedas: " + monedas;
+    }
+    // Llamar para encender la barra antes de empezar a cargar
+    public void ShowChargeBar()
+    {
+        barraCarga.value = 0f;
+        barraCarga.gameObject.SetActive(true);
+    }
+
+    // Llamar mientras cargas para actualizar el llenado (0–1)
+    public void UpdateChargeBar(float normalized)
+    {
+        float porcentaje = Mathf.Clamp01(normalized) * barraCarga.maxValue;
+        barraCarga.value = porcentaje;
+    }
+
+    // Llamar al soltar el botón de carga
+    public void HideChargeBar()
+    {
+        barraCarga.gameObject.SetActive(false);
+        barraCarga.value = 0f;
     }
     void ActualizarHUD()
     {

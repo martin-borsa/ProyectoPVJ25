@@ -2,8 +2,22 @@ using UnityEngine;
 
 public class PlayerDamage : MonoBehaviour
 {
+    public bool melee = false;
     public int damageAmount = 25;
+    private float damageAmountMelee;
     public string targetTag = "Enemy";
+    public GameObject player;
+    private BoomerangFunctions boomerangFunctions;
+
+    void Start()
+    {
+        if (melee)
+        {
+            boomerangFunctions = player.GetComponent<BoomerangFunctions>();
+            if (boomerangFunctions == null)
+                Debug.LogWarning("BoomerangFunctions no encontrado en " + gameObject.name);
+        }
+    }
 
     void OnCollisionEnter(Collision collision)
     {
@@ -22,7 +36,16 @@ public class PlayerDamage : MonoBehaviour
             var health = other.GetComponent<EnemyHealth>();
             if (health != null)
             {
-                health.TakeDamage(damageAmount);
+                if (melee == true && boomerangFunctions != null)
+                {
+                    damageAmountMelee = damageAmount * boomerangFunctions.multi;
+                    health.TakeDamage((int)damageAmountMelee);
+                }
+
+                else
+                {
+                    health.TakeDamage(damageAmount);
+                }
             }
         }
     }
