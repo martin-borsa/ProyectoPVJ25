@@ -118,6 +118,7 @@ public class BoomerangFunctions : MonoBehaviour
     private void HandleMeleeState()
     {
         if (!isHolding) return;
+        restBoomerang.SetActive(false);
         // 1) Acumular tiempo de hold
         holdTime += Time.deltaTime;
         // Limitar a threshold para no crecer más
@@ -179,6 +180,7 @@ public class BoomerangFunctions : MonoBehaviour
         hud.barraCarga.gameObject.SetActive(false);
         state = BoomerangState.Rest;
         multi = 1f;
+        restBoomerang.SetActive(true);
     }
 
     private void Launch()
