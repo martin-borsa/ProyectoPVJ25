@@ -7713,7 +7713,8 @@ PrefabInstance:
       value: Boomerang Lanzamiento
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: -3969340488723669796, guid: 470a7158595feb44cbfac12a8083b973, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 470a7158595feb44cbfac12a8083b973, type: 3}
@@ -7843,7 +7844,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2022888608}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 1959421698643666035, guid: c2241d04fca90524b9f4ced2fa2e543a, type: 3}
+    - {fileID: -4440988041160917270, guid: c2241d04fca90524b9f4ced2fa2e543a, type: 3}
+    - {fileID: 2374980825869801076, guid: c2241d04fca90524b9f4ced2fa2e543a, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c2241d04fca90524b9f4ced2fa2e543a, type: 3}
@@ -8027,10 +8031,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1629917733008098670, guid: 2d7a6b9804af5734db2c9e5331088348, type: 3}
-      propertyPath: m_Radius
-      value: 200
-      objectReference: {fileID: 0}
     - target: {fileID: 2013863551795835052, guid: 2d7a6b9804af5734db2c9e5331088348, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.1
