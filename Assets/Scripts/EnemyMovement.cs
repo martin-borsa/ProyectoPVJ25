@@ -26,6 +26,8 @@ public class EnemyMovement : MonoBehaviour
     [Tooltip("Layers considered as walls. On collision, a new patrol point is chosen.")]
     public LayerMask wallLayer;
 
+    [SerializeField] float _rotationSpeed;//Facu Morales
+
     private Rigidbody rb;
     private Vector3 originPosition;
     private Vector3 patrolPoint;
@@ -61,12 +63,16 @@ public class EnemyMovement : MonoBehaviour
 
         if (isChasing && player != null)
         {
-            MoveTowards(player.position, chaseSpeed);
+            MoveTowards(player, chaseSpeed);
+
+            Quaternion placeToRotate = Quaternion.LookRotation(player.position, Vector3.up);
+
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, placeToRotate, _rotationSpeed * Time.deltaTime);
         }
         else
         {
             // Patrol behavior
-            MoveTowards(patrolPoint, patrolSpeed);
+            //MoveTowards(patrolPoint, patrolSpeed); //Facu Morales
 
             // If reached patrol point, pick a new one
             if (Vector3.Distance(transform.position, patrolPoint) < pointReachedThreshold)
@@ -76,11 +82,22 @@ public class EnemyMovement : MonoBehaviour
         }
     }
 
-    private void MoveTowards(Vector3 target, float speed)
+    /*private void MoveTowards(Vector3 target, float speed)
     {
         Vector3 newPos = Vector3.MoveTowards(rb.position, target, speed * Time.deltaTime);
         rb.MovePosition(newPos);
+
+        
+
+    }*/
+
+    private void MoveTowards(Transform target, float speed)
+    {
+        Vector3 newPos = (rb.transform.position + target.transform.position).normalized;
+        rb.MovePosition(newPos * speed * Time.fixedDeltaTime); //Cambiar el MoveTowars por un AddForce o .Velocity.
+        
     }
+
 
     private void ChooseNewPatrolPoint()
     {
