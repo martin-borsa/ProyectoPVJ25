@@ -33,7 +33,7 @@ public class PlayerDamage : MonoBehaviour
     {
         if (other.CompareTag(targetTag))
         {
-            var health = other.GetComponent<EnemyHealth>();
+            var health = other.GetComponent<IDamage>();
             if (health != null)
             {
                 if (melee == true && boomerangFunctions != null)

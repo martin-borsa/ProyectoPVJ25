@@ -14,6 +14,8 @@ public class BoomerangFunctions : MonoBehaviour
     public Collider catchZoneCollider;
     public HUDController hud;
 
+    
+
     [Header("Movement Settings")]
     public float launchSpeed = 10f;
     public float returnSpeed = 8f;
