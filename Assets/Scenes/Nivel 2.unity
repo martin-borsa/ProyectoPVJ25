@@ -16354,6 +16354,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 797108718944050440, guid: 4f223cef57db45147ba465841f123e48, type: 3}
   m_PrefabInstance: {fileID: 733343125}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &734533416 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3492738378643203473, guid: c2241d04fca90524b9f4ced2fa2e543a, type: 3}
+  m_PrefabInstance: {fileID: 1647896685}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &735372332
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18878,6 +18883,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5964062129836070886, guid: 2d7a6b9804af5734db2c9e5331088348, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 734533416}
+    - target: {fileID: 5964062129836070886, guid: 2d7a6b9804af5734db2c9e5331088348, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8291816520822503230, guid: 2d7a6b9804af5734db2c9e5331088348, type: 3}
       propertyPath: m_Name
       value: Enemy (5)
@@ -20333,6 +20346,18 @@ PrefabInstance:
     - target: {fileID: 1752383441977397961, guid: ff29bd25eca78444aba268a34f8da595, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3656931329741253503, guid: ff29bd25eca78444aba268a34f8da595, type: 3}
+      propertyPath: m_UiScaleMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3656931329741253503, guid: ff29bd25eca78444aba268a34f8da595, type: 3}
+      propertyPath: m_ReferenceResolution.x
+      value: 1920
+      objectReference: {fileID: 0}
+    - target: {fileID: 3656931329741253503, guid: ff29bd25eca78444aba268a34f8da595, type: 3}
+      propertyPath: m_ReferenceResolution.y
+      value: 1080
       objectReference: {fileID: 0}
     - target: {fileID: 8306938282252324121, guid: ff29bd25eca78444aba268a34f8da595, type: 3}
       propertyPath: m_AnchorMax.x
