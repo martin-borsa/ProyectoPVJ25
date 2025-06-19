@@ -93,9 +93,13 @@ public class EnemyMovement : MonoBehaviour
 
     private void MoveTowards(Transform target, float speed)
     {
-        Vector3 newPos = (target.transform.position - rb.transform.position).normalized;
+        Vector3 newPos = (target.transform.position - rb.transform.position);
+        if (newPos.magnitude > 10)
+        {
+            rb.MovePosition(rb.position + newPos.normalized * speed * Time.fixedDeltaTime);
+        }
 
-        rb.MovePosition(rb.position + newPos * speed * Time.fixedDeltaTime); //Cambiar el MoveTowars por un AddForce o .Velocity.
+         //Cambiar el MoveTowars por un AddForce o .Velocity.
         
     }
 
