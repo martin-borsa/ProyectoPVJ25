@@ -32,6 +32,7 @@ public class PlayerHealth : MonoBehaviour
     private void Die()
     {
         Debug.Log("El jugador murio");
+        GameEvents.PlayerTriggerDeath(this.gameObject);
         if (charController != null) charController.enabled = false;
         transform.Rotate(0f, 90f, 0f);
         StartCoroutine(PlayerDeathCountdown());
@@ -47,5 +48,13 @@ public class PlayerHealth : MonoBehaviour
             timer--;
         }
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            TakeDamage(50);
+        }
     }
 }

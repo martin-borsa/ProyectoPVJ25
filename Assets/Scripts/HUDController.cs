@@ -11,6 +11,8 @@ public class HUDController : MonoBehaviour
     public Slider barraCarga;
     public TextMeshProUGUI textoMonedas;
     public GameObject crosshair;
+    public TextMeshProUGUI textoMuerte;
+    public Player player;
 
     [Header("Valores simulados")]
     public int vida = 100;
@@ -25,11 +27,14 @@ public class HUDController : MonoBehaviour
         barraCarga.value = 0f;
         barraCarga.gameObject.SetActive(false);
         crosshair.gameObject.SetActive(false);
-        ActualizarHUD();
+        textoMuerte.gameObject.SetActive(false);
+       
     }
 
     void Update()
     {
+        ActualizarHUD();
+
         // Simulación de daño y recolección
         if (Input.GetKeyDown(KeyCode.H)) vida -= 10;
         if (Input.GetKeyDown(KeyCode.M)) monedas += 1;
@@ -46,8 +51,8 @@ public class HUDController : MonoBehaviour
     }
     public void ActualizarMonedas()
     {
-        monedas++;
-        textoMonedas.text = "Monedas: " + monedas;
+        int coins = player.CoinAmount;
+        textoMonedas.text = "Monedas: " + coins;
     }
     // Llamar para encender la barra antes de empezar a cargar
     public void ShowChargeBar()
@@ -73,6 +78,20 @@ public class HUDController : MonoBehaviour
     {
         barraVida.value = vida;
         barraCarga.value = carga;
-        textoMonedas.text = "Monedas: " + monedas;
+        textoMonedas.text = "Monedas: " + player.CoinAmount;
+    }
+
+    private void ShowDeathScreen(GameObject player)
+    {
+        textoMuerte.gameObject.SetActive(true);
+    }
+    private void OnEnable()
+    {
+        GameEvents.OnPlayerDeath += ShowDeathScreen;
+    }
+
+    private void OnDisable()
+    {
+        GameEvents.OnPlayerDeath -= ShowDeathScreen;
     }
 }
