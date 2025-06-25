@@ -11,7 +11,9 @@ GameObject:
   - component: {fileID: 3347809750380807959}
   - component: {fileID: 2552306448039779215}
   - component: {fileID: 2353966713141662664}
-  - component: {fileID: 7524139398100703245}
+  - component: {fileID: 1134851566932793541}
+  - component: {fileID: 8401178959118863972}
+  - component: {fileID: 3306930430088516646}
   m_Layer: 0
   m_Name: Moneda de platino
   m_TagString: Untagged
@@ -84,8 +86,23 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &7524139398100703245
-CapsuleCollider:
+--- !u!114 &1134851566932793541
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5922797705210578770}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c39f9a88c8b551a4691f83c59d329365, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CoinType: 1
+  ZipcoinScore: 1
+  ZipcoinPlatinoScore: 10
+--- !u!65 &8401178959118863972
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -99,11 +116,28 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5000001
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+  serializedVersion: 3
+  m_Size: {x: 56.681103, y: 15.818182, z: 56.681114}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3306930430088516646
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5922797705210578770}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edb2a7a4cdc1a27458b7dbc9143725fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationSpeed: 180
+  floatHeight: 0.4
+  floatSpeed: 1.8
+  startPosition: {x: 0, y: 0, z: 0}
+  ramdomOffSet: 0
+  rotationAxis: {x: 0, y: 1, z: 0}
+  rotationSpace: 0

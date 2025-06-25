@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5573186840030782022}
   - component: {fileID: 654321639504253593}
   - component: {fileID: 6108125977965546900}
+  - component: {fileID: -4252135970533772868}
   m_Layer: 0
   m_Name: Moneda
   m_TagString: Untagged
@@ -121,3 +122,22 @@ MonoBehaviour:
   CoinType: 0
   ZipcoinScore: 1
   ZipcoinPlatinoScore: 10
+--- !u!114 &-4252135970533772868
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5256605996396551091}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edb2a7a4cdc1a27458b7dbc9143725fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationSpeed: 180
+  floatHeight: 0.4
+  floatSpeed: 1.8
+  startPosition: {x: 0, y: 0, z: 0}
+  ramdomOffSet: 0
+  rotationAxis: {x: 0, y: 1, z: 0}
+  rotationSpace: 0

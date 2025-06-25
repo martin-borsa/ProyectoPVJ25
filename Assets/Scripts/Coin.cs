@@ -4,18 +4,30 @@ using UnityEngine;
 
 public class Coin : MonoBehaviour
 {
-    public CoinType CoinType = CoinType.Zipcoin; //2
+    public CoinType CoinType; //2
     public int ZipcoinScore;
     public int ZipcoinPlatinoScore;
     private int CoinAmount;
 
+    
+
+
+    public static readonly Dictionary<CoinType, int> Coins = new Dictionary<CoinType, int>() //7
+    {
+        {CoinType.Zipcoin, 1}, {CoinType.Zipcoin_Platino, 10}
+    };
+
+
     public int CoinBalance => CoinAmount; //Getter
 
+    //Para Crear región Ctrl + K + S
+    
+    #region RECOLECCIÓN DE MONEDAS
     private void OnTriggerEnter(Collider other) //5
     {
         if (other.gameObject.CompareTag("Player"))
         {
-           other.gameObject.GetComponent<Player>().CoinAmount = Colect();
+            other.gameObject.GetComponent<Player>().CoinAmount += Colect();
         }
     }
 
@@ -33,10 +45,22 @@ public class Coin : MonoBehaviour
 
     public int Colect() //4
     {
-        int score = GetPointsByType();
+        int score = GetCoinValue();
         CoinAmount += score; //Lambda
         gameObject.SetActive(false);
         return score;
+    }
+
+    public int GetCoinValue() //8
+    {
+        if (Coins.ContainsKey(CoinType))
+        {
+            return Coins[CoinType];
+        }
+        else
+        {
+            return 0;
+        }
     }
 
     public int CoinsToUI() //6
@@ -50,4 +74,5 @@ public enum CoinType //1
     Zipcoin,
     Zipcoin_Platino,
 
-}
+} 
+#endregion

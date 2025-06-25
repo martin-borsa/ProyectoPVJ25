@@ -350,7 +350,6 @@ GameObject:
   - component: {fileID: 3558227298333493297}
   - component: {fileID: 8942816896415305441}
   - component: {fileID: 3016041162376569594}
-  - component: {fileID: 7051083109124712166}
   m_Layer: 7
   m_Name: Player Model
   m_TagString: Player
@@ -568,19 +567,6 @@ MonoBehaviour:
   meleeCooldown: 1
   chargeThreshold: 2
   multi: 1
---- !u!114 &7051083109124712166
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5254220722817840965}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f96a5da6b719ab45ab7c5e5ef644dcd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hud: {fileID: 0}
 --- !u!1 &5691084262310264846
 GameObject:
   m_ObjectHideFlags: 0
