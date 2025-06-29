@@ -20,10 +20,10 @@ public class MenuInicial : MonoBehaviour
         SceneManager.LoadScene("MenuInicial");
     }
 
-    //public void Controles()
-    //{
-    //    SceneManager.LoadScene("Controles"); //Este lo acabo de poner
-    //}
+    public void Controles()
+    {
+        SceneManager.LoadScene("Controles"); 
+    }
 
     //public void Exit()
     //{
