@@ -22,7 +22,7 @@ public class PlayerMovement : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
     }
 
-    void Update()
+    void FixedUpdate()
     {
         // --- Rotación con el mouse ---
         float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity;
