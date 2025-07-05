@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class PlayerHealth : MonoBehaviour
+public class PlayerHealth : MonoBehaviour, IDamage
 {
     public HUDController hud; // ? Drag en el Inspector
     public int maxHealth = 100;
@@ -18,18 +18,18 @@ public class PlayerHealth : MonoBehaviour
             Debug.LogWarning("No se encontró CharacterController en el jugador.");
     }
 
-    public void TakeDamage(int amount)
+    public void TakeDamage(int DanioRecibido)
     {
-        currentHealth -= amount;
+        currentHealth -= DanioRecibido;
+
         if (hud != null)
         {
             hud.ActualizarVida(currentHealth);
         }
-        Debug.Log($"El jugador recibió {amount} de daño. Vida restante: {currentHealth}");
+        Debug.Log($"El jugador recibió {DanioRecibido} de daño. Vida restante: {currentHealth}");
         if (currentHealth <= 0) Die();
     }
-
-    private void Die()
+    public void Die()
     {
         Debug.Log("El jugador murio");
         GameEvents.PlayerTriggerDeath(this.gameObject);

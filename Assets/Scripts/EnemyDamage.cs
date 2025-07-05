@@ -19,11 +19,9 @@ public class EnemyDamage : MonoBehaviour
     {
         if (other.CompareTag(targetTag))
         {
-            var health = other.GetComponent<PlayerHealth>();
-            if (health != null)
-            {
-                health.TakeDamage(damageAmount);
-            }
+           other.gameObject.GetComponent<IDamage>().TakeDamage(damageAmount);
+            
+            
         }
     }
 }
