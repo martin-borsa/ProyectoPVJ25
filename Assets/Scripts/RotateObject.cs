@@ -22,7 +22,7 @@ public class RotateObject : MonoBehaviour
     private void Update()
     {
         RotateObjecto();
-        FloatObject();
+        //FloatObject
     }
 
     #region MOVIMIENTO DE OBJETO
