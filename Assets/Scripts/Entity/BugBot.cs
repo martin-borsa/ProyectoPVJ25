@@ -16,11 +16,7 @@ public class BugBot : Entity
         Debug.Log("Bug-Bot eliminado");
     }
 
-    private void Start()
-    {
-        vida = 100;
-       
-    }
+    
 
     
 }
